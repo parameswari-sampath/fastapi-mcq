@@ -1,19 +1,19 @@
 # Implementation Plan
 
-- [ ] 1. Set up project structure and core configuration
+- [x] 1. Set up project structure and core configuration
   - Create the modular directory structure with auth, tests, mcq, and core modules
   - Initialize uv project with pyproject.toml and required dependencies
   - Set up core configuration files for database, security, and application settings
   - _Requirements: 4.4, 4.5_
 
 - [ ] 2. Implement core database and security utilities
-  - [ ] 2.1 Create async database connection and session management
+  - [x] 2.1 Create async database connection and session management
     - Implement PostgreSQL async connection using SQLAlchemy and asyncpg
     - Create database session dependency for FastAPI
     - Set up database configuration with environment variables
     - _Requirements: 4.4_
 
-  - [ ] 2.2 Implement JWT authentication and password hashing utilities
+  - [x] 2.2 Implement JWT authentication and password hashing utilities
     - Create JWT token generation and validation functions
     - Implement password hashing using bcrypt
     - Create authentication dependency for protected endpoints

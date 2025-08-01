@@ -10,7 +10,12 @@ from .config import settings
 engine = create_async_engine(
     settings.database_url,
     echo=settings.debug,
-    future=True
+    future=True,
+    connect_args={
+        "server_settings": {
+            "application_name": "mcq_test_platform",
+        }
+    }
 )
 
 # Create async session factory
@@ -35,7 +40,7 @@ convention = {
 Base.metadata = MetaData(naming_convention=convention)
 
 
-async def get_db() -> AsyncSession:
+async def get_db():
     """
     Dependency function to get database session.
     
@@ -45,6 +50,9 @@ async def get_db() -> AsyncSession:
     async with async_session_maker() as session:
         try:
             yield session
+        except Exception:
+            await session.rollback()
+            raise
         finally:
             await session.close()
 
