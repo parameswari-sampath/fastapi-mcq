@@ -83,34 +83,34 @@
     - Write integration tests for all test endpoints
     - _Requirements: 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 4.1, 4.2, 4.3_
 
-- [ ] 5. Implement MCQ questions module
-  - [ ] 5.1 Create MCQ model with test relationship
+- [x] 5. Implement MCQ questions module
+  - [x] 5.1 Create MCQ model with test relationship
     - Define MCQ model with id, title, description, four options, correct_answer, test_id, timestamps, and soft delete
     - Set up foreign key relationship to Test model
     - Add validation for correct_answer field (1-4)
     - Create unit tests for MCQ model validation and relationships
     - _Requirements: 3.1, 3.2, 3.3, 3.4, 3.5_
 
-  - [ ] 5.2 Create MCQ schemas with validation
+  - [x] 5.2 Create MCQ schemas with validation
     - Implement Pydantic schemas for MCQ creation, update, and response
     - Add validation for required options and correct_answer range (1-4)
     - Create unit tests for schema validation including correct_answer constraints
     - _Requirements: 3.2, 3.3, 3.4, 4.2_
 
-  - [ ] 5.3 Implement MCQ repository with soft delete
+  - [x] 5.3 Implement MCQ repository with soft delete
     - Create MCQRepository with async methods for CRUD operations
     - Implement methods for creating, retrieving active questions by test, updating, and soft delete
     - Add test-specific question filtering
     - Write unit tests for repository methods including soft delete behavior
     - _Requirements: 3.1, 3.5, 3.6, 3.7, 3.8_
 
-  - [ ] 5.4 Create MCQ service layer
+  - [x] 5.4 Create MCQ service layer
     - Implement MCQService with business logic for question management
     - Add user authorization checks for question operations (via test ownership)
     - Create unit tests for service layer logic
     - _Requirements: 3.1, 3.5, 3.6, 3.7, 3.8_
 
-  - [ ] 5.5 Implement MCQ API endpoints
+  - [x] 5.5 Implement MCQ API endpoints
     - Create FastAPI router with POST, GET, and PATCH endpoints for MCQ questions
     - Implement authentication middleware and test ownership authorization
     - Add proper error handling and HTTP status codes

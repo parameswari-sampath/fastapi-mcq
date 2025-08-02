@@ -32,6 +32,7 @@ class Test(Base):
     
     # Relationships
     user = relationship("User", back_populates="tests")
+    questions = relationship("MCQ", back_populates="test", lazy="select")
     
     def __repr__(self) -> str:
         """String representation of Test."""
