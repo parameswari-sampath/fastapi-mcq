@@ -117,14 +117,14 @@
     - Write integration tests for all MCQ endpoints
     - _Requirements: 3.1, 3.2, 3.3, 3.4, 3.5, 3.6, 3.7, 3.8, 4.1, 4.2, 4.3_
 
-- [ ] 6. Set up database migrations and main application
-  - [ ] 6.1 Create Alembic migrations for all models
+- [x] 6. Set up database migrations and main application
+  - [x] 6.1 Create Alembic migrations for all models
     - Initialize Alembic configuration for database migrations
     - Generate initial migration for User, Test, and MCQ models
     - Test migration up and down operations
     - _Requirements: 4.4_
 
-  - [ ] 6.2 Create main FastAPI application
+  - [x] 6.2 Create main FastAPI application
     - Set up main.py with FastAPI app initialization
     - Register all module routers (auth, tests, mcq)
     - Configure CORS and middleware
