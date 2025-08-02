@@ -6,7 +6,7 @@
   - Set up core configuration files for database, security, and application settings
   - _Requirements: 4.4, 4.5_
 
-- [ ] 2. Implement core database and security utilities
+- [x] 2. Implement core database and security utilities
   - [x] 2.1 Create async database connection and session management
     - Implement PostgreSQL async connection using SQLAlchemy and asyncpg
     - Create database session dependency for FastAPI
@@ -19,32 +19,32 @@
     - Create authentication dependency for protected endpoints
     - _Requirements: 1.3, 1.4, 1.5, 4.5_
 
-- [ ] 3. Implement User authentication module
-  - [ ] 3.1 Create User model with SQLAlchemy
+- [x] 3. Implement User authentication module
+  - [x] 3.1 Create User model with SQLAlchemy
     - Define User model with id, email, password_hash, timestamps, and soft delete
     - Set up database relationships and constraints
     - Create unit tests for User model validation
     - _Requirements: 1.1, 1.2_
 
-  - [ ] 3.2 Create authentication schemas and validation
+  - [x] 3.2 Create authentication schemas and validation
     - Implement Pydantic schemas for user registration and login requests
     - Create response schemas for authentication tokens
     - Add email format and password strength validation
     - _Requirements: 1.1, 1.2, 4.2_
 
-  - [ ] 3.3 Implement user repository for database operations
+  - [x] 3.3 Implement user repository for database operations
     - Create UserRepository with async methods for user CRUD operations
     - Implement user creation, retrieval by email, and authentication queries
     - Write unit tests for repository methods
     - _Requirements: 1.1, 1.3_
 
-  - [ ] 3.4 Create authentication service layer
+  - [x] 3.4 Create authentication service layer
     - Implement AuthService with user registration and login logic
     - Add duplicate email checking and password verification
     - Create unit tests for authentication business logic
     - _Requirements: 1.1, 1.2, 1.3, 1.4_
 
-  - [ ] 3.5 Implement authentication API endpoints
+  - [x] 3.5 Implement authentication API endpoints
     - Create FastAPI router with POST /auth/register and POST /auth/login endpoints
     - Implement request validation and error handling
     - Write integration tests for authentication endpoints
