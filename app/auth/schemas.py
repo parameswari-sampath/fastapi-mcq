@@ -3,7 +3,7 @@ Pydantic schemas for authentication requests and responses.
 """
 from datetime import datetime
 from typing import Optional
-from pydantic import BaseModel, EmailStr, Field, validator
+from pydantic import BaseModel, EmailStr, Field, field_validator, ConfigDict
 
 
 class UserRegisterRequest(BaseModel):
@@ -17,7 +17,8 @@ class UserRegisterRequest(BaseModel):
         description="User password (minimum 8 characters)"
     )
     
-    @validator('password')
+    @field_validator('password')
+    @classmethod
     def validate_password_strength(cls, v):
         """Validate password strength requirements."""
         if len(v) < 8:
@@ -59,8 +60,7 @@ class UserResponse(BaseModel):
     created_at: datetime = Field(..., description="User creation timestamp")
     updated_at: datetime = Field(..., description="User last update timestamp")
     
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class ErrorResponse(BaseModel):
