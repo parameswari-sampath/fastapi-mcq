@@ -8,6 +8,12 @@ from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine, async_sess
 from sqlalchemy.exc import IntegrityError
 from app.core.database import Base
 from app.auth.models import User
+# Import Test model to ensure it's registered with SQLAlchemy
+try:
+    from app.test_management.models import Test
+except ImportError:
+    # Test model might not exist in some test scenarios
+    pass
 
 
 # Test database URL (in-memory SQLite for testing)

@@ -27,8 +27,8 @@ class User(Base):
     # Soft delete flag
     is_deleted = Column(Boolean, default=False, nullable=False, index=True, server_default="false")
     
-    # Relationships
-    tests = relationship("Test", back_populates="user")
+    # Relationships (lazy loaded to avoid circular imports)
+    tests = relationship("Test", back_populates="user", lazy="select")
     
     def __repr__(self) -> str:
         """String representation of User."""

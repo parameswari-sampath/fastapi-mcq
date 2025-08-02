@@ -25,3 +25,9 @@ dev = [
     "pytest>=8.4.1",
     "pytest-asyncio>=1.1.0",
 ]
+
+[tool.pytest.ini_options]
+# Filter out collection warnings for our model/schema classes
+filterwarnings = [
+    "ignore::pytest.PytestCollectionWarning",
+]
