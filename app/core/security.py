@@ -117,3 +117,38 @@ async def get_current_user_id(
         return int(user_id)
     except ValueError:
         raise credentials_exception
+
+
+async def get_current_user(
+    current_user_id: int = Depends(get_current_user_id),
+    db: AsyncSession = Depends(get_db)
+):
+    """
+    Get current user from JWT token.
+    
+    Args:
+        current_user_id: Current user ID from token
+        db: Database session
+        
+    Returns:
+        User: Current user object
+        
+    Raises:
+        HTTPException: If user not found
+    """
+    from app.auth.models import User
+    from sqlalchemy import select
+    
+    result = await db.execute(
+        select(User).where(User.id == current_user_id, User.is_deleted == False)
+    )
+    user = result.scalar_one_or_none()
+    
+    if user is None:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="User not found",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    
+    return user

@@ -1,24 +1,27 @@
 """
-User model for authentication.
+Test model for test management.
 """
 from datetime import datetime
-from sqlalchemy import Column, Integer, String, Boolean, DateTime
+from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey, Text
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from app.core.database import Base
 
 
-class User(Base):
-    """User model for authentication and authorization."""
+class Test(Base):
+    """Test model for organizing MCQ questions."""
     
-    __tablename__ = "user"
+    __tablename__ = "test"
     
     # Primary key
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     
-    # User credentials
-    email = Column(String(255), unique=True, nullable=False, index=True)
-    password_hash = Column(String(255), nullable=False)
+    # Test details
+    title = Column(String(200), nullable=False)
+    description = Column(Text, nullable=True, default=None)
+    
+    # Foreign key to User
+    user_id = Column(Integer, ForeignKey("user.id"), nullable=False, index=True)
     
     # Timestamps
     created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
@@ -28,12 +31,12 @@ class User(Base):
     is_deleted = Column(Boolean, default=False, nullable=False, index=True, server_default="false")
     
     # Relationships
-    tests = relationship("Test", back_populates="user")
+    user = relationship("User", back_populates="tests")
     
     def __repr__(self) -> str:
-        """String representation of User."""
-        return f"<User(id={self.id}, email='{self.email}', is_deleted={self.is_deleted})>"
+        """String representation of Test."""
+        return f"<Test(id={self.id}, title='{self.title}', user_id={self.user_id}, is_deleted={self.is_deleted})>"
     
     def __str__(self) -> str:
         """Human-readable string representation."""
-        return f"User {self.id}: {self.email}"
+        return f"Test {self.id}: {self.title}"

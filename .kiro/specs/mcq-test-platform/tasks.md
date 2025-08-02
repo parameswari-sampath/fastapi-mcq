@@ -50,33 +50,33 @@
     - Write integration tests for authentication endpoints
     - _Requirements: 1.1, 1.2, 1.3, 1.4, 1.5, 4.1, 4.2, 4.3_
 
-- [ ] 4. Implement Test management module
-  - [ ] 4.1 Create Test model with relationships
+- [x] 4. Implement Test management module
+  - [x] 4.1 Create Test model with relationships
     - Define Test model with id, title, description, user_id, timestamps, and soft delete
     - Set up foreign key relationship to User model
     - Create unit tests for Test model validation and relationships
     - _Requirements: 2.1, 2.2, 2.3, 2.6_
 
-  - [ ] 4.2 Create test schemas for API operations
+  - [x] 4.2 Create test schemas for API operations
     - Implement Pydantic schemas for test creation, update, and response
     - Add validation for required fields and optional description
     - Create unit tests for schema validation
     - _Requirements: 2.1, 2.2, 2.3, 4.2_
 
-  - [ ] 4.3 Implement test repository with soft delete
+  - [x] 4.3 Implement test repository with soft delete
     - Create TestRepository with async methods for CRUD operations
     - Implement methods for creating, retrieving active tests, updating, and soft delete
     - Add user-specific test filtering
     - Write unit tests for repository methods including soft delete behavior
     - _Requirements: 2.1, 2.4, 2.5, 2.6_
 
-  - [ ] 4.4 Create test service layer
+  - [x] 4.4 Create test service layer
     - Implement TestService with business logic for test management
     - Add user authorization checks for test operations
     - Create unit tests for service layer logic
     - _Requirements: 2.1, 2.4, 2.5, 2.6_
 
-  - [ ] 4.5 Implement test API endpoints
+  - [x] 4.5 Implement test API endpoints
     - Create FastAPI router with POST, GET, and PATCH endpoints for tests
     - Implement authentication middleware and user authorization
     - Add proper error handling and HTTP status codes
