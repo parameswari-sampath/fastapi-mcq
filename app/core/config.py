@@ -15,8 +15,8 @@ class Settings(BaseSettings):
     debug: bool = False
     
     # Database settings
-    database_url: str = "postgresql+asyncpg://user:password@localhost/mcq_test_db"
-    test_database_url: str = "postgresql+asyncpg://user:password@localhost/mcq_test_db_test"
+    database_url: str = "sqlite+aiosqlite:///./mcq_test_platform.db"
+    test_database_url: str = "sqlite+aiosqlite:///./test_mcq_test_platform.db"
     
     # Security settings
     secret_key: str = "your-secret-key-change-in-production"
