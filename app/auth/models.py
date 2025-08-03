@@ -2,10 +2,17 @@
 User model for authentication.
 """
 from datetime import datetime
-from sqlalchemy import Column, Integer, String, Boolean, DateTime
+from enum import Enum
+from sqlalchemy import Column, Integer, String, Boolean, DateTime, Enum as SQLEnum
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from app.core.database import Base
+
+
+class UserRole(str, Enum):
+    """User role enumeration."""
+    STUDENT = "STUDENT"
+    TEACHER = "TEACHER"
 
 
 class User(Base):
@@ -20,6 +27,9 @@ class User(Base):
     email = Column(String(255), unique=True, nullable=False, index=True)
     password_hash = Column(String(255), nullable=False)
     
+    # User role
+    role = Column(SQLEnum(UserRole), nullable=False, default=UserRole.TEACHER, server_default="TEACHER")
+    
     # Timestamps
     created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
     updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False)
@@ -32,8 +42,8 @@ class User(Base):
     
     def __repr__(self) -> str:
         """String representation of User."""
-        return f"<User(id={self.id}, email='{self.email}', is_deleted={self.is_deleted})>"
+        return f"<User(id={self.id}, email='{self.email}', role={self.role}, is_deleted={self.is_deleted})>"
     
     def __str__(self) -> str:
         """Human-readable string representation."""
-        return f"User {self.id}: {self.email}"
+        return f"User {self.id}: {self.email} ({self.role})"

@@ -4,15 +4,17 @@ Unit tests for User model.
 import pytest
 import pytest_asyncio
 from datetime import datetime
+from enum import Enum
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine, async_sessionmaker
 from sqlalchemy.exc import IntegrityError
 from app.core.database import Base
-from app.auth.models import User
-# Import Test model to ensure it's registered with SQLAlchemy
+from app.auth.models import User, UserRole
+# Import models to ensure they're registered with SQLAlchemy
 try:
     from app.test_management.models import Test
+    from app.mcq.models import MCQ
 except ImportError:
-    # Test model might not exist in some test scenarios
+    # Models might not exist in some test scenarios
     pass
 
 
@@ -58,6 +60,7 @@ class TestUserModel:
         assert user.id is not None
         assert user.email == "test@example.com"
         assert user.password_hash == "hashed_password"
+        assert user.role == UserRole.TEACHER  # Default role
         assert user.is_deleted is False
         assert isinstance(user.created_at, datetime)
         assert isinstance(user.updated_at, datetime)
@@ -138,12 +141,14 @@ class TestUserModel:
             id=1,
             email="test@example.com",
             password_hash="hashed_password",
+            role=UserRole.TEACHER,
             is_deleted=False
         )
         
         repr_str = repr(user)
         assert "User(id=1" in repr_str
         assert "email='test@example.com'" in repr_str
+        assert "role=UserRole.TEACHER" in repr_str
         assert "is_deleted=False" in repr_str
     
     def test_user_str(self):
@@ -151,11 +156,12 @@ class TestUserModel:
         user = User(
             id=1,
             email="test@example.com",
-            password_hash="hashed_password"
+            password_hash="hashed_password",
+            role=UserRole.TEACHER
         )
         
         str_repr = str(user)
-        assert str_repr == "User 1: test@example.com"
+        assert str_repr == "User 1: test@example.com (UserRole.TEACHER)"
     
     @pytest.mark.asyncio
     async def test_user_required_fields(self, db_session: AsyncSession):
@@ -173,3 +179,60 @@ class TestUserModel:
             user = User(email="test@example.com")
             db_session.add(user)
             await db_session.commit()
+    
+    @pytest.mark.asyncio
+    async def test_user_role_default(self, db_session: AsyncSession):
+        """Test that role defaults to TEACHER."""
+        user = User(
+            email="test@example.com",
+            password_hash="hashed_password"
+        )
+        
+        db_session.add(user)
+        await db_session.commit()
+        await db_session.refresh(user)
+        
+        assert user.role == UserRole.TEACHER
+    
+    @pytest.mark.asyncio
+    async def test_user_role_student(self, db_session: AsyncSession):
+        """Test creating user with STUDENT role."""
+        user = User(
+            email="student@example.com",
+            password_hash="hashed_password",
+            role=UserRole.STUDENT
+        )
+        
+        db_session.add(user)
+        await db_session.commit()
+        await db_session.refresh(user)
+        
+        assert user.role == UserRole.STUDENT
+    
+    @pytest.mark.asyncio
+    async def test_user_role_teacher(self, db_session: AsyncSession):
+        """Test creating user with TEACHER role."""
+        user = User(
+            email="teacher@example.com",
+            password_hash="hashed_password",
+            role=UserRole.TEACHER
+        )
+        
+        db_session.add(user)
+        await db_session.commit()
+        await db_session.refresh(user)
+        
+        assert user.role == UserRole.TEACHER
+    
+    def test_user_role_enum_values(self):
+        """Test UserRole enum values."""
+        assert UserRole.STUDENT == "STUDENT"
+        assert UserRole.TEACHER == "TEACHER"
+        assert len(UserRole) == 2
+    
+    def test_user_role_enum_inheritance(self):
+        """Test that UserRole inherits from str and Enum."""
+        assert isinstance(UserRole.STUDENT, str)
+        assert isinstance(UserRole.TEACHER, str)
+        assert issubclass(UserRole, str)
+        assert issubclass(UserRole, Enum)
